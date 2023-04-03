@@ -6,7 +6,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class HotelSearch {
 
@@ -39,6 +41,12 @@ public class HotelSearch {
         driver.findElement(By.id("travellersInput")).click();
         driver.findElement(By.id("adultPlusBtn")).click();
         driver.findElement(By.id("childPlusBtn")).click();
+        driver.findElement(By.xpath("//button[text()=' Search']")).click();
+
+        List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class,'list_title')]//b")).stream()
+                .map(el -> el.getText()).collect(Collectors.toList());
+        System.out.println(hotelNames.size());
+        System.out.println(hotelNames);
 
     }
 }
