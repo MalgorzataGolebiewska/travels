@@ -24,6 +24,5 @@ public class HotelSearch {
         driver.findElement(By.name("checkin")).sendKeys("17/04/2021");
         driver.findElement(By.name("checkout")).sendKeys("18/04/2021");
 
-
     }
 }
