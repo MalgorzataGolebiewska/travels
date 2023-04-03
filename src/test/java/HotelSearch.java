@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -44,9 +45,12 @@ public class HotelSearch {
         driver.findElement(By.xpath("//button[text()=' Search']")).click();
 
         List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class,'list_title')]//b")).stream()
-                .map(el -> el.getText()).collect(Collectors.toList());
-        System.out.println(hotelNames.size());
-        System.out.println(hotelNames);
+                .map(el -> el.getAttribute("textContent")).collect(Collectors.toList());
+
+        Assert.assertEquals("Jumeirah Beach Hotel",hotelNames.get(0));
+        Assert.assertEquals("Oasis Beach Tower",hotelNames.get(1));
+        Assert.assertEquals("Rose Rayhaan Rotana",hotelNames.get(2));
+        Assert.assertEquals("Hyatt Regency Perth",hotelNames.get(3));
 
     }
 }
