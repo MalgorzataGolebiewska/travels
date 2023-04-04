@@ -22,5 +22,10 @@ public class SignUpTest {
 
         driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
+
+        driver.findElement(By.name("firstname")).sendKeys("Pepino");
+        driver.findElement(By.name("lastname")).sendKeys("Denowo");
+        driver.findElement(By.name("phone")).sendKeys("123456789");
+        driver.findElement(By.name("email")).sendKeys("pepino@pp.pp");
     }
 }
