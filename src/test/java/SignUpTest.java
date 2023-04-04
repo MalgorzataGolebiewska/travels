@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -23,9 +24,17 @@ public class SignUpTest {
         driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
 
-        driver.findElement(By.name("firstname")).sendKeys("Pepino");
+        String firstName = "Pepino";
+        driver.findElement(By.name("firstname")).sendKeys(firstName);
         driver.findElement(By.name("lastname")).sendKeys("Denowo");
         driver.findElement(By.name("phone")).sendKeys("123456789");
-        driver.findElement(By.name("email")).sendKeys("pepino@pp.pp");
+        driver.findElement(By.name("email")).sendKeys("pepino3@pp.pp");
+        driver.findElement(By.name("password")).sendKeys("Test123");
+        driver.findElement(By.name("confirmpassword")).sendKeys("Test123");
+        driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
+
+        WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
+        Assert.assertTrue(heading.getText().contains(firstName));
+        Assert.assertEquals(heading.getText(), "Hi, Pepino Denowo");
     }
 }
