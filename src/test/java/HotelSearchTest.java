@@ -1,27 +1,17 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class HotelSearch {
+public class HotelSearchTest extends BaseTest {
+
 
     @Test
-    public void searchHotel() throws InterruptedException {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void searchHotelTest() throws InterruptedException {
+
         driver.findElement(By.xpath("//span[text()='Search by Hotel or City Name']")).click();
         driver.findElement(By.xpath("//div[@id='select2-drop']//input")).sendKeys("Dubai");
         driver.findElement(By.xpath("//span[@class='select2-match' and text()='Dubai']")).click();
@@ -52,17 +42,12 @@ public class HotelSearch {
         Assert.assertEquals(hotelNames.get(2),"Rose Rayhaan Rotana");
         Assert.assertEquals(hotelNames.get(3),"Hyatt Regency Perth");
 
+
     }
 
     @Test
-    public void hotelWithoutNameSearch() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void hotelWithoutNameSearchTest() {
+
         driver.findElement(By.name("checkin")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='11']"))
                 .stream()
@@ -84,7 +69,6 @@ public class HotelSearch {
         WebElement noResult = driver.findElement(By.xpath("//div[@class='itemscontainer']//h2"));
         Assert.assertTrue(noResult.isDisplayed());
         Assert.assertEquals(noResult.getText(), "No Results Found");
-
 
     }
 
