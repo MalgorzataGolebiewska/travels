@@ -86,7 +86,7 @@ public class HotelSearch {
         Assert.assertEquals(noResult.getText(), "No Results Found");
 
 
-
-
     }
+
+
 }
