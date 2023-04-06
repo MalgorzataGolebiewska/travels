@@ -21,20 +21,24 @@ public class SignUpTest {
         driver.manage().window().maximize();
         driver.get("http://www.kurs-selenium.pl/demo/");
 
+
+        String firstName = "Pepino";
+        int randomNumber = (int) (Math.random()*1000);
+        String email = "pepino" + randomNumber + "@tester.pl";
         driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
 
-        String firstName = "Pepino";
         driver.findElement(By.name("firstname")).sendKeys(firstName);
-        driver.findElement(By.name("lastname")).sendKeys("Denowo");
+        driver.findElement(By.name("lastname")).sendKeys("Testowy");
         driver.findElement(By.name("phone")).sendKeys("123456789");
-        driver.findElement(By.name("email")).sendKeys("pepino3@pp.pp");
+        driver.findElement(By.name("email")).sendKeys(email);
         driver.findElement(By.name("password")).sendKeys("Test123");
         driver.findElement(By.name("confirmpassword")).sendKeys("Test123");
         driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
 
         WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
         Assert.assertTrue(heading.getText().contains(firstName));
-        Assert.assertEquals(heading.getText(), "Hi, Pepino Denowo");
+        Assert.assertEquals(heading.getText(), "Hi, Pepino Testowy");
+
     }
 }
