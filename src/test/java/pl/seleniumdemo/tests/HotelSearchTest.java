@@ -1,6 +1,7 @@
 package pl.seleniumdemo.tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
@@ -17,7 +18,7 @@ public class HotelSearchTest extends BaseTest {
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.setCity("Dubai");
         hotelSearchPage.setDates("29/05/2023", "30/05/2023");
-        hotelSearchPage.setTravellers();
+        hotelSearchPage.setTravellers(1,2);
         hotelSearchPage.performSearch();
 
         ResultsPage resultsPage = new ResultsPage(driver);
@@ -31,33 +32,21 @@ public class HotelSearchTest extends BaseTest {
 
     }
 
-    /*
+
     @Test
     public void hotelWithoutNameSearchTest() {
 
-        driver.findElement(By.name("checkin")).click();
-        driver.findElements(By.xpath("//td[@class='day ' and text()='11']"))
-                .stream()
-                .filter(ell -> ell.isDisplayed())
-                .findFirst()
-                .ifPresent(ell -> ell.click());
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.setDates("29/05/2023","30/05/2023");
+        hotelSearchPage.setTravellers(0, 1);
+        hotelSearchPage.performSearch();
 
-        driver.findElement(By.name("checkout")).click();
-        driver.findElements(By.xpath("//td[@class='day ' and text()='30']"))
-                .stream()
-                .filter(el -> el.isDisplayed())
-                .findFirst()
-                .ifPresent(el -> el.click());
+        ResultsPage resultsPage = new ResultsPage(driver);
 
-        driver.findElement(By.id("travellersInput")).click();
-        driver.findElement(By.id("childPlusBtn")).click();
-        driver.findElement(By.xpath("//button[text()=' Search']")).click();
+        Assert.assertTrue(resultsPage.resultHeading.isDisplayed());
+        Assert.assertEquals(resultsPage.getHeadingText(), "No Results Found");
 
-        WebElement noResult = driver.findElement(By.xpath("//div[@class='itemscontainer']//h2"));
-        Assert.assertTrue(noResult.isDisplayed());
-        Assert.assertEquals(noResult.getText(), "No Results Found");
-
-    }*/
+    }
 
 
 }
