@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
+import pl.seleniumdemo.pages.ResultsPage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,9 +20,8 @@ public class HotelSearchTest extends BaseTest {
         hotelSearchPage.setTravellers();
         hotelSearchPage.performSearch();
 
-
-        List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class,'list_title')]//b")).stream()
-                .map(el -> el.getAttribute("textContent")).collect(Collectors.toList());
+        ResultsPage resultsPage = new ResultsPage(driver);
+        List<String> hotelNames = resultsPage.getHotelNames();
 
         Assert.assertEquals(hotelNames.get(0),"Jumeirah Beach Hotel");
         Assert.assertEquals(hotelNames.get(1),"Oasis Beach Tower");
