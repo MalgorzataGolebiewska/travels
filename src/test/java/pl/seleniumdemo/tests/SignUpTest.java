@@ -1,7 +1,5 @@
 package pl.seleniumdemo.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -10,7 +8,6 @@ import pl.seleniumdemo.pages.LoggedUserPage;
 import pl.seleniumdemo.pages.SignUpPage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SignUpTest extends BaseTest {
 
@@ -45,24 +42,21 @@ public class SignUpTest extends BaseTest {
     }
 
     @Test
-    public void regWithoutDataTest() {
+    public void signUpEmptyFormTest() {
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.openSignUpForm();
+        SignUpPage signUpPage = new SignUpPage(driver);
+        signUpPage.signUpButton();
 
 
-        driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
-        driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
-
-        List<String> alerts = driver.findElements(By.xpath("//div[@class='alert alert-danger']//p")).stream()
-                .map(WebElement::getText)
-                .collect(Collectors.toList());
-        System.out.println(alerts);
+        List<String> errors = signUpPage.getErrors();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(alerts.contains("The Email field is required."));
-        softAssert.assertTrue(alerts.contains("The Password field is required."));
-        softAssert.assertTrue(alerts.contains("The Password field is required."));
-        softAssert.assertTrue(alerts.contains("The First name field is required."));
-        softAssert.assertTrue(alerts.contains("The Last Name field is required."));
+        softAssert.assertTrue(errors.contains("The Email field is required."));
+        softAssert.assertTrue(errors.contains("The Password field is required."));
+        softAssert.assertTrue(errors.contains("The Password field is required."));
+        softAssert.assertTrue(errors.contains("The First name field is required."));
+        softAssert.assertTrue(errors.contains("The Last Name field is required."));
         softAssert.assertAll();
 
 
@@ -72,23 +66,23 @@ public class SignUpTest extends BaseTest {
     public void signUpInvalidEmailTest() {
 
         String firstName = "Pepino";
-        driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
 
-        driver.findElement(By.name("firstname")).sendKeys(firstName);
-        driver.findElement(By.name("lastname")).sendKeys("Testowy");
-        driver.findElement(By.name("phone")).sendKeys("123456789");
-        driver.findElement(By.name("email")).sendKeys("potestuj.pl");
-        driver.findElement(By.name("password")).sendKeys("Test123");
-        driver.findElement(By.name("confirmpassword")).sendKeys("Test123");
-        driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.openSignUpForm();
 
-        List<String> alerts = driver.findElements(By.xpath("//div[@class='alert alert-danger']//p")).stream()
-                .map(WebElement::getText)
-                .collect(Collectors.toList());
-        System.out.println(alerts);
+        SignUpPage signUpPage = new SignUpPage(driver);
+        signUpPage.setFirstName(firstName);
+        signUpPage.setLastName("Testowy");
+        signUpPage.setPhone("123456789");
+        signUpPage.setEmail("tester");
+        signUpPage.setPassword("Test123");
+        signUpPage.setConfirmPassword("Test123");
+        signUpPage.signUpButton();
 
-        Assert.assertTrue(alerts.contains("The Email field must contain a valid email address."));
+
+        ;
+
+        Assert.assertTrue(signUpPage.getErrors().contains("The Email field must contain a valid email address."));
 
 
     }
