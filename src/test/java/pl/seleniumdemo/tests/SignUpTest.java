@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pl.seleniumdemo.pages.HotelSearchPage;
+import pl.seleniumdemo.pages.SignUpPage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,14 +24,17 @@ public class SignUpTest extends BaseTest {
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.openSignUpForm();
 
+        SignUpPage signUpPage = new SignUpPage(driver);
+        signUpPage.setFirstName(firstName);
+        signUpPage.setLastName("Testowy");
+        signUpPage.setPhone("123456789");
+        signUpPage.setEmail(email);
+        signUpPage.setPassword("Test123");
+        signUpPage.setConfirmPassword("Test123");
+        signUpPage.signUpButton();
 
-        driver.findElement(By.name("firstname")).sendKeys(firstName);
-        driver.findElement(By.name("lastname")).sendKeys("Testowy");
-        driver.findElement(By.name("phone")).sendKeys("123456789");
-        driver.findElement(By.name("email")).sendKeys(email);
-        driver.findElement(By.name("password")).sendKeys("Test123");
-        driver.findElement(By.name("confirmpassword")).sendKeys("Test123");
-        driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
+
+
 
         WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
         Assert.assertTrue(heading.getText().contains(firstName));
