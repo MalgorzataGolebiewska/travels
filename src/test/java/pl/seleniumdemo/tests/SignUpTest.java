@@ -3,7 +3,6 @@ package pl.seleniumdemo.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pl.seleniumdemo.model.User;
 import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.LoggedUserPage;
 import pl.seleniumdemo.pages.SignUpPage;
@@ -18,63 +17,30 @@ public class SignUpTest extends BaseTest {
 
         String firstName = "Pepino";
         int randomNumber = (int) (Math.random() * 1000);
-        String email = "pepino" + randomNumber + "@tester.pl";
 
-        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.openSignUpForm();
-
-        SignUpPage signUpPage = new SignUpPage(driver);
-        signUpPage.setFirstName(firstName);
-        signUpPage.setLastName("Testowy");
-        signUpPage.setPhone("123456789");
-        signUpPage.setEmail(email);
-        signUpPage.setPassword("Test123");
-        signUpPage.setConfirmPassword("Test123");
-        signUpPage.signUpButton();
+        LoggedUserPage loggedUserPage = new HotelSearchPage(driver)
+                .openSignUpForm()
+                .setFirstName(firstName)
+                .setLastName("Testowy")
+                .setPhone("123456789")
+                .setEmail("pepino" + randomNumber + "@tester.pl")
+                .setPassword("Test123")
+                .setConfirmPassword("Test123")
+                .signUpButton();
 
 
-
-
-        LoggedUserPage loggedUserPage = new LoggedUserPage(driver);
         Assert.assertTrue(loggedUserPage.getHeadingText().contains(firstName));
         Assert.assertEquals(loggedUserPage.getHeadingText(), "Hi, Pepino Testowy");
 
 
     }
 
-    @Test
-    public void signUpTest2() {
-
-
-        int randomNumber = (int) (Math.random() * 1000);
-        String email = "pepino" + randomNumber + "@tester.pl";
-
-        User user = new User();
-        user.setFirstName("Pepino");
-        user.setLastName("Testowy");
-        user.setPhone("123456789");
-        user.setEmail(email);
-        user.setPassword("test123");
-
-        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.openSignUpForm();
-
-        SignUpPage signUpPage = new SignUpPage(driver);
-        // signUpPage.fillSignUpForm("firstName","Testowy","123456789", "test","test","test");
-        signUpPage.fillSignUpForm(user);
-
-        LoggedUserPage loggedUserPage = new LoggedUserPage(driver);
-        Assert.assertTrue(loggedUserPage.getHeadingText().contains(user.getLastName()));
-        Assert.assertEquals(loggedUserPage.getHeadingText(), "Hi, Pepino Testowy");
-
-
-    }
+    //
     @Test
     public void signUpEmptyFormTest() {
-        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.openSignUpForm();
-        SignUpPage signUpPage = new SignUpPage(driver);
-        signUpPage.signUpButton();
+        SignUpPage signUpPage = new HotelSearchPage(driver)
+                .openSignUpForm();
+        signUpPage.signUpButton(); //zostaje tak jak jest, po openSignForm otworzyłoby stronę zalogowanego użytkownika, a tutaj nie wypełniamy formatki, przekierowałoby na LoggedUserPage
 
 
         List<String> errors = signUpPage.getErrors();
@@ -95,20 +61,16 @@ public class SignUpTest extends BaseTest {
 
         String firstName = "Pepino";
 
-        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.openSignUpForm();
-
-        SignUpPage signUpPage = new SignUpPage(driver);
-        signUpPage.setFirstName(firstName);
-        signUpPage.setLastName("Testowy");
-        signUpPage.setPhone("123456789");
-        signUpPage.setEmail("tester");
-        signUpPage.setPassword("Test123");
-        signUpPage.setConfirmPassword("Test123");
+        SignUpPage signUpPage = new HotelSearchPage(driver)
+                .openSignUpForm()
+                .setFirstName(firstName)
+                .setLastName("Testowy")
+                .setPhone("123456789")
+                .setEmail("tester")
+                .setPassword("Test123")
+                .setConfirmPassword("Test123");
         signUpPage.signUpButton();
 
-
-        ;
 
         Assert.assertTrue(signUpPage.getErrors().contains("The Email field must contain a valid email address."));
 
