@@ -56,6 +56,7 @@ public class SignUpTest extends BaseTest {
         signUpPage.setEmail(email);
         signUpPage.setPassword("test123");
         signUpPage.setConfirmPassword("test123");
+        signUpPage.signUpButton();
 
         LoggedUserPage loggedUserPage = new LoggedUserPage(driver);
         Assert.assertTrue(loggedUserPage.getHeadingText().contains("Testowy"));
@@ -103,7 +104,6 @@ public class SignUpTest extends BaseTest {
         signUpPage.signUpButton();
 
 
-        ;
 
         Assert.assertTrue(signUpPage.getErrors().contains("The Email field must contain a valid email address."));
 
