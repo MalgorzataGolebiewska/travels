@@ -44,9 +44,10 @@ public class HotelSearchPage {
     private WebDriver driver;
 
     public HotelSearchPage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         this.driver = driver;
     }
+
     public void setCity(String cityName) {
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
@@ -66,8 +67,8 @@ public class HotelSearchPage {
         addTraveler(childPlusBtn, childToAdd);
     }
 
-    private void addTraveler (WebElement travelerBtn, int numberOfTravelers){
-        for (int i=0; i< numberOfTravelers; i++){
+    private void addTraveler(WebElement travelerBtn, int numberOfTravelers) {
+        for (int i = 0; i < numberOfTravelers; i++) {
             travelerBtn.click();
         }
     }

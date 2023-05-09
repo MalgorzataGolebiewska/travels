@@ -3,7 +3,6 @@ package pl.seleniumdemo.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pl.seleniumdemo.model.User;
 import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.LoggedUserPage;
 import pl.seleniumdemo.pages.SignUpPage;
@@ -33,8 +32,6 @@ public class SignUpTest extends BaseTest {
         signUpPage.signUpButton();
 
 
-
-
         LoggedUserPage loggedUserPage = new LoggedUserPage(driver);
         Assert.assertTrue(loggedUserPage.getHeadingText().contains(firstName));
         Assert.assertEquals(loggedUserPage.getHeadingText(), "Hi, Pepino Testowy");
@@ -49,26 +46,24 @@ public class SignUpTest extends BaseTest {
         int randomNumber = (int) (Math.random() * 1000);
         String email = "pepino" + randomNumber + "@tester.pl";
 
-        User user = new User();
-        user.setFirstName("Pepino");
-        user.setLastName("Testowy");
-        user.setPhone("123456789");
-        user.setEmail(email);
-        user.setPassword("test123");
-
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.openSignUpForm();
 
         SignUpPage signUpPage = new SignUpPage(driver);
-        // signUpPage.fillSignUpForm("firstName","Testowy","123456789", "test","test","test");
-        signUpPage.fillSignUpForm(user);
+        signUpPage.setFirstName("Pepino");
+        signUpPage.setLastName("Testowy");
+        signUpPage.setPhone("123456789");
+        signUpPage.setEmail(email);
+        signUpPage.setPassword("test123");
+        signUpPage.setConfirmPassword("test123");
 
         LoggedUserPage loggedUserPage = new LoggedUserPage(driver);
-        Assert.assertTrue(loggedUserPage.getHeadingText().contains(user.getLastName()));
+        Assert.assertTrue(loggedUserPage.getHeadingText().contains("Testowy"));
         Assert.assertEquals(loggedUserPage.getHeadingText(), "Hi, Pepino Testowy");
 
 
     }
+
     @Test
     public void signUpEmptyFormTest() {
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);

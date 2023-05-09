@@ -16,8 +16,8 @@ public class ResultsPage {
     @FindBy(xpath = "//div[@class='itemscontainer']//h2")
     public WebElement resultHeading;
 
-    public  ResultsPage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
+    public ResultsPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 
     public List<String> getHotelNames() {

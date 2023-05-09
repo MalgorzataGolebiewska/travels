@@ -12,7 +12,7 @@ public class LoggedUserPage {
 
 
     public LoggedUserPage(WebDriver driver) {
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
     public String getHeadingText() {
