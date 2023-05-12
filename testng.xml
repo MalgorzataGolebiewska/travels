@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Travellers">
+    <test name="Sign Up Test" thread-count="4" parallel="methods">
+        <classes>
+            <class name="pl.seleniumdemo.tests.SignUpTest"/>
+        </classes>
+    </test>
+</suite>
