@@ -1,11 +1,13 @@
 package pl.seleniumdemo.tests;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.LoggedUserPage;
 import pl.seleniumdemo.pages.SignUpPage;
+import pl.seleniumdemo.utils.SeleniumHelper;
 
 import java.util.List;
 
@@ -102,7 +104,6 @@ public class SignUpTest extends BaseTest {
         signUpPage.setPassword("Test123");
         signUpPage.setConfirmPassword("Test123");
         signUpPage.signUpButton();
-
 
 
         Assert.assertTrue(signUpPage.getErrors().contains("The Email field must contain a valid email address."));
