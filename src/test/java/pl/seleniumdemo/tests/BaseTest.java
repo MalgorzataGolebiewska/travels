@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pl.seleniumdemo.utils.DriverFactory;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 

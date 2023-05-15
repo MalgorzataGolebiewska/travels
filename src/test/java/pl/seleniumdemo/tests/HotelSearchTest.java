@@ -1,10 +1,8 @@
 package pl.seleniumdemo.tests;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.ResultsPage;
-
 import java.util.List;
 
 public class HotelSearchTest extends BaseTest {
